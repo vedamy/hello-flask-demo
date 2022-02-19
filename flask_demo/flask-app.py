@@ -4,24 +4,24 @@ from flask import Flask, json, render_template, request
 import os
 
 #create instance of Flask app
-myapp = Flask(__name__)
+app = Flask(__name__)
 
 #decorator
-@myapp.route("/")
+@app.route("/")
 def echo_hello():
     return "<p>Hello World!</p>"
 
-@myapp.route("/gdp")
+@app.route("/gdp")
 def gdp():
-    json_url = os.path.join(myapp.static_folder,"","us_gdp.json")
+    json_url = os.path.join(app.static_folder,"","us_gdp.json")
     data_json = json.load(open(json_url))
 
     return render_template('index.html',data=data_json)
 
 
-@myapp.route("/gdp/<year>")
+@app.route("/gdp/<year>")
 def gdp_year(year):
-    json_url = os.path.join(myapp.static_folder,"","us_gdp.json")
+    json_url = os.path.join(app.static_folder,"","us_gdp.json")
     data_json = json.load(open(json_url))
 
     data = data_json[1]
@@ -33,4 +33,4 @@ def gdp_year(year):
 
 
 if __name__ == "__main__":
-    myapp.run(debug=True)
+    app.run(debug=True)
