@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Flask Templates</title>
+</head>
+<ul>
+  <!-- Loop through Data to display the list of US GDP for better view-->
+  {% for item in data %}
+      <li>Year: {{item.date}}</li>
+      <li>Indicator Value: {{item.indicator.value}}</li>
+      <li>Country: {{item.country.value}}</li>
+      <li>Value: {{item.value}}</li>
+  {% endfor %}
+  </ul>
+</html>
