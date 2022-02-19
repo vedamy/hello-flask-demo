@@ -11,8 +11,8 @@ app = Flask(__name__)
 def echo_hello():
     return "<p>Hello World!</p>"
 
-@app.route("/nobel")
-def nobel():
+@app.route("/all")
+def nobel():  # Read nobeljson file
     json_url = os.path.join(app.static_folder,"","nobel.json")
     data_json = json.load(open(json_url))
 
@@ -20,15 +20,52 @@ def nobel():
 
 
 @app.route("/nobel/<year>")
-def nobel_year(year):
+def nobel_year(year): # get data for the given year
     json_url = os.path.join(app.static_folder,"","nobel.json")
     data_json = json.load(open(json_url))
 
-    data = data_json[1]
+    data = data_json['prizes']
     year = request.view_args['year']
-
-    output_data = [x for x in data if x['date']==year]
+#condition to check for year
+    output_data = [x for x in data if x['year']==year]
     return render_template('index.html',data=output_data)
+# Form to add nobel prize details
+@app.route('/addPrize')
+def addPrize():
+    return render_template('addNobelPrize.html')
+# method to save newly added nobel prize details to nobel.json
+@app.route('/save', methods=['POST'])
+def save():
+    data = {}
+    member = {}
+    members = []
+    # Getting data from the form
+    data['year'] = request.form['year']
+    data['category'] = request.form['category']
+    member['id'] = request.form['member_id']
+    member['firstname'] = request.form['first_name']
+    member['surname'] = request.form['last_name']
+    member['motivation'] = request.form['motivation']
+    member['share'] = request.form['share']
+    members.append(member)
+    #Appending data to the nobel.json
+    data['laureates'] = members
+    json_url = os.path.join(app.static_folder,"","nobel.json")
+    data_json = json.load(open(json_url))
+    prizes = data_json["prizes"]
+    prizes.append(data)
+    data_json["prizes"] = prizes
+
+# Read and update data to nobel.json file.
+    a_file = open(json_url, "r")
+    json_object = json.load(a_file)
+    a_file.close()
+    json_object = data_json
+
+    a_file = open(json_url, "w")
+    json.dump(json_object, a_file)
+    a_file.close()
+    return render_template('index.html',data=json_object)
 
 
 
