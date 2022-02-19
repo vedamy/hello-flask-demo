@@ -11,17 +11,17 @@ app = Flask(__name__)
 def echo_hello():
     return "<p>Hello World!</p>"
 
-@app.route("/gdp")
-def gdp():
-    json_url = os.path.join(app.static_folder,"","us_gdp.json")
+@app.route("/nobel")
+def nobel():
+    json_url = os.path.join(app.static_folder,"","nobel.json")
     data_json = json.load(open(json_url))
 
     return render_template('index.html',data=data_json)
 
 
-@app.route("/gdp/<year>")
-def gdp_year(year):
-    json_url = os.path.join(app.static_folder,"","us_gdp.json")
+@app.route("/nobel/<year>")
+def nobel_year(year):
+    json_url = os.path.join(app.static_folder,"","nobel.json")
     data_json = json.load(open(json_url))
 
     data = data_json[1]
