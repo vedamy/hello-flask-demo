@@ -28,7 +28,7 @@ def nobel_year(year):
     year = request.view_args['year']
 
     output_data = [x for x in data if x['date']==year]
-    return render_template('flask.html',data=output_data)
+    return render_template('index.html',data=output_data)
 
 
 
