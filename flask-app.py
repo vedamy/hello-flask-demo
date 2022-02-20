@@ -30,8 +30,8 @@ def nobel_year(year): # get data for the given year
     output_data = [x for x in data if x['year']==year]
     return render_template('index.html',data=output_data)
 # Form to add nobel prize details
-@app.route('/addPrize')
-def addPrize():
+@app.route('/addPOST')
+def addPOST():
     return render_template('addNobelPrize.html')
 # method to save newly added nobel prize details to nobel.json
 @app.route('/save', methods=['POST'])
