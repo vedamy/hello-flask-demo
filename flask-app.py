@@ -15,8 +15,9 @@ def echo_hello():
 def nobel():  # Read nobeljson file
     json_url = os.path.join(app.static_folder,"","nobel.json")
     data_json = json.load(open(json_url))
+    render_template('index.html',data=data_json)
 
-    return render_template('index.html',data=data_json)
+    return data_json
 
 
 @app.route("/<year>", methods=['GET'])
@@ -33,7 +34,7 @@ def nobel_year(year): # get data for the given year
         output_data = [x for x in data if x['year']>=year]
         return render_template('index.html',data=output_data)
 
-        
+
 # Form to add nobel prize details
 @app.route('/add')
 def addPrize():
