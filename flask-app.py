@@ -32,7 +32,8 @@ def nobel_year(year): # get data for the given year
 
         #condition to check for year
         output_data = [x for x in data if x['year']>=year]
-        return render_template('index.html',data=output_data)
+        render_template('index.html',data=output_data)
+        return output_data
 
 
 # Form to add nobel prize details
